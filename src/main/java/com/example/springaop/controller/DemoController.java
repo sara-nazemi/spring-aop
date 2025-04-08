@@ -15,18 +15,29 @@ public class DemoController {
     DemoService demoService;
 
     @GetMapping("/hello")
-    public String hello(){
+    public String hello() {
         return demoService.sayHello();
     }
 
     @GetMapping("/admin")
-    public String admin(@RequestHeader("Role") String role){
+    public String admin(@RequestHeader("Role") String role) {
         UserContext.setRole(role);
-        try{
+        try {
             return demoService.secretOperation();
-        }finally {
+        } finally {
             UserContext.clear();
         }
 
+    }
+
+
+    @GetMapping("/user")
+    public String user(@RequestHeader("Role") String role) {
+        UserContext.setRole(role);
+        try {
+            return demoService.secretOperation();
+        } finally {
+            UserContext.clear();
+        }
     }
 }

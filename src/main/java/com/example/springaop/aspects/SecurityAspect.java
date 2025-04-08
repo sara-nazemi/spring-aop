@@ -17,7 +17,6 @@ public class SecurityAspect {
         if (!requiredRole.equals(currentUserRole)) {
             throw new SecurityException("Access Denied. Required role : " + requiredRole);
         }
-
     }
 
     private String getCurrentUserRole() {
