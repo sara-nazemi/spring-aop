@@ -1,6 +1,6 @@
-package com.example.springaop;
+package com.example.springaop.services;
 
-import com.example.springaop.service.DemoService;
+import com.example.springaop.service.DemoServiceImpl;
 import com.example.springaop.userContext.UserContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class DemoServiceTest {
 
     @Autowired
-    private DemoService demoService;
+    private DemoServiceImpl demoService;
 
     @BeforeEach
     void clearContext() {
@@ -25,7 +25,7 @@ class DemoServiceTest {
     void shouldAllowAdminAccess() {
         UserContext.setRole("ADMIN");
         String result = demoService.secretOperation();
-        assertEquals("Admin operation executed!", result);
+        assertEquals("This is a secret admin operation!", result);
     }
 
     @Test

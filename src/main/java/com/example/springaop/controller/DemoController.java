@@ -1,8 +1,10 @@
 package com.example.springaop.controller;
 
-import com.example.springaop.service.DemoService;
+import com.example.springaop.service.DemoServiceImpl;
 import com.example.springaop.userContext.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/demo")
 public class DemoController {
     @Autowired
-    DemoService demoService;
+    DemoServiceImpl demoService;
 
-    @GetMapping("/hello")
+    @GetMapping("/api/demo")
     public String hello() {
         return demoService.sayHello();
     }
@@ -35,9 +37,20 @@ public class DemoController {
     public String user(@RequestHeader("Role") String role) {
         UserContext.setRole(role);
         try {
-            return demoService.secretOperation();
+            return demoService.userSecretOperation();
         } finally {
             UserContext.clear();
         }
+    }
+
+    @GetMapping("/user2")
+    public ResponseEntity<String> getUserStuff() {
+        String result = demoService.userSecretOperation();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/error")
+    public ResponseEntity<String> getError() {
+        throw new SecurityException("Access Denied!");
     }
 }
