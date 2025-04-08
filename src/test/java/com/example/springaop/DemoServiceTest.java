@@ -39,12 +39,14 @@ class DemoServiceTest {
 
     }
 
+    @Test
     void shouldAllowUserAccess() {
         UserContext.setRole("USER");
         String result = demoService.secretOperation();
         assertEquals("User Operation executed!", result);
     }
 
+    @Test
     void shouldDenyUserAccessForGuestRole() {
         UserContext.setRole("GUEST");
         SecurityException exception = assertThrows(SecurityException.class, () -> {
